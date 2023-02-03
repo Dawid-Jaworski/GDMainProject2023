@@ -1,0 +1,6 @@
+
+
+interface IRespawn 
+{
+    void respawn();
+}
