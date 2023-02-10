@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour,IRespawn
 {
-    private float PlayerSpeed = 5.0f;
-    private float JumpHeight = 2.0f;
+    public float PlayerSpeed = 5.0f;
+    public float JumpHeight = 2.0f;
     private float gravity = -9.81f;
     Rigidbody rb;
     Transform spawnPoint;
@@ -28,11 +28,31 @@ public class Movement : MonoBehaviour,IRespawn
     // Update is called once per frame
     void Update()
     {
-        // Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        // transform.position += new Vector3(horizontal, 0, vertical) * PlayerSpeed * Time.deltaTime;
-        float xMove = Input.GetAxisRaw("Vertical");
-        xMove = -xMove;
-        float zMove = Input.GetAxisRaw("Horizontal");
-        rb.velocity = new Vector3(xMove, 0, zMove) * PlayerSpeed;
+        
+
+
+        if (Input.GetKey(KeyCode.W))
+        {
+            transform.position -= PlayerSpeed * transform.right * Time.deltaTime;
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            transform.position -= PlayerSpeed * transform.forward * Time.deltaTime;
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            transform.position += PlayerSpeed * transform.right * Time.deltaTime;
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            transform.position += PlayerSpeed * transform.forward * Time.deltaTime;
+        }
+        
+        
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            rb.AddForce(Vector3.up * JumpHeight, ForceMode.Impulse);
+
+        }
     }
 }

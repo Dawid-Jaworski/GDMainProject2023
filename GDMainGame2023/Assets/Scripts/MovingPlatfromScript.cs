@@ -28,10 +28,7 @@ public class MovingPlatfromScript : MonoBehaviour
         {
             case MovingPlatformState.InWall:
 
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    startPlatformMovement();
-                }
+               
               
                 break;
 
