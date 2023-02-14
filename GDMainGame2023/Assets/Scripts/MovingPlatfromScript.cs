@@ -8,8 +8,10 @@ public class MovingPlatfromScript : MonoBehaviour
 
     enum MovingPlatformState { InWall, Extended, GoingOut, ReturningToWall}
     MovingPlatformState currently = MovingPlatformState.InWall;
-    private float goingOutSpeed = 2, returningSpeed = 1, extendtedTime = 4;
+    public float goingOutSpeed = 2, returningSpeed = 1, extendtedTime = 4;
     Vector3 defaultPosition,extendedPosition;
+
+    public Transform extendedPositionTarget;
     private float timer;
 
 
@@ -17,6 +19,9 @@ public class MovingPlatfromScript : MonoBehaviour
     void Start()
     {
         defaultPosition = transform.position;
+        if (extendedPositionTarget)
+            extendedPosition = extendedPositionTarget.position;
+        else
         extendedPosition = defaultPosition + transform.localScale.z * transform.forward;
     }
 
