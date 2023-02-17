@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,10 @@ public class Movement : MonoBehaviour,IRespawn
     private float gravity = -9.81f;
     Rigidbody rb;
     Transform spawnPoint;
+    private float stoppedThreshold = 0.01f;
+    private float MouseSensitivity = 0.5f;
+    private readonly float cameraDistance = 5f;
+
     public void respawn()
     {
         transform.position = spawnPoint.position;
@@ -19,6 +24,8 @@ public class Movement : MonoBehaviour,IRespawn
     void Start()
 
     {
+        Camera.main.transform.rotation = transform.rotation;
+        Camera.main.transform.position = transform.position - cameraDistance * transform.forward + Vector3.up;
         CharacterSpawnPointScript character = FindObjectOfType<CharacterSpawnPointScript>();
         spawnPoint = character.transform;
 
@@ -33,26 +40,37 @@ public class Movement : MonoBehaviour,IRespawn
 
         if (Input.GetKey(KeyCode.W))
         {
-            transform.position -= PlayerSpeed * transform.right * Time.deltaTime;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            transform.position -= PlayerSpeed * transform.forward * Time.deltaTime;
+            transform.position += PlayerSpeed * transform.forward * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            transform.position += PlayerSpeed * transform.right * Time.deltaTime;
+            transform.position -= PlayerSpeed * transform.forward * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            transform.position += PlayerSpeed * transform.forward * Time.deltaTime;
+            transform.position += PlayerSpeed * transform.right * Time.deltaTime;
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            transform.position -= PlayerSpeed * transform.right * Time.deltaTime;
         }
         
         
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded())
         {
             rb.AddForce(Vector3.up * JumpHeight, ForceMode.Impulse);
 
         }
+
+        transform.Rotate(Vector3.up, MouseSensitivity*Input.GetAxis("Horizontal"));
+     Camera.main.transform.RotateAround( transform.position, transform.right,- MouseSensitivity * Input.GetAxis("Vertical"));
+        if (Vector3.Dot(Camera.main.transform.forward , transform.forward) < Mathf.Cos(30 * Mathf.Deg2Rad))
+            Camera.main.transform.RotateAround(transform.position, transform.right, MouseSensitivity * Input.GetAxis("Vertical"));
+        //  Camera.main.transform.LookAt(transform.position, Vector3.up);
+    }
+
+    private bool isGrounded()
+    {
+        return MathF.Abs(rb.velocity.y) < stoppedThreshold;
     }
 }

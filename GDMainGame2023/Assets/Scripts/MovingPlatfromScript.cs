@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MovingPlatfromScript : MonoBehaviour
 {
-
+    public bool staysExtended = false;
     enum MovingPlatformState { InWall, Extended, GoingOut, ReturningToWall}
     MovingPlatformState currently = MovingPlatformState.InWall;
     public float goingOutSpeed = 2, returningSpeed = 1, extendtedTime = 4;
@@ -38,11 +38,15 @@ public class MovingPlatfromScript : MonoBehaviour
                 break;
 
             case MovingPlatformState.Extended:
-                timer += Time.deltaTime;
-                if (timer >= extendtedTime)
+
+                if (!staysExtended)
                 {
-                    currently = MovingPlatformState.ReturningToWall;
-                    timer = 0;
+                    timer += Time.deltaTime;
+                    if (timer >= extendtedTime)
+                    {
+                        currently = MovingPlatformState.ReturningToWall;
+                        timer = 0;
+                    }
                 }
 
                 break;
