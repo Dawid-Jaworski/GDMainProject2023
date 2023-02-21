@@ -14,6 +14,9 @@ public class MovingPlatfromScript : MonoBehaviour
     public Transform extendedPositionTarget;
     private float timer;
 
+    public Transform linkedPlatform;
+    MovingPlatfromScript linkePlatformScript;
+
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +26,9 @@ public class MovingPlatfromScript : MonoBehaviour
             extendedPosition = extendedPositionTarget.position;
         else
         extendedPosition = defaultPosition + transform.localScale.z * transform.forward;
+
+        if (linkedPlatform)
+            linkePlatformScript = linkedPlatform.GetComponent<MovingPlatfromScript>();
     }
 
     // Update is called once per frame
@@ -85,7 +91,13 @@ public class MovingPlatfromScript : MonoBehaviour
 
     internal void startPlatformMovement()
     {
-        currently = MovingPlatformState.GoingOut;
-        timer = 0;
+        if (currently == MovingPlatformState.InWall)
+        {
+            currently = MovingPlatformState.GoingOut;
+            timer = 0;
+            if (linkePlatformScript)
+                linkePlatformScript.startPlatformMovement();
+
+        }
     }
 }

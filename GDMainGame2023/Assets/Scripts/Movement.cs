@@ -24,6 +24,9 @@ public class Movement : MonoBehaviour,IRespawn
     void Start()
 
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
         Camera.main.transform.rotation = transform.rotation;
         Camera.main.transform.position = transform.position - cameraDistance * transform.forward + Vector3.up;
         CharacterSpawnPointScript character = FindObjectOfType<CharacterSpawnPointScript>();
