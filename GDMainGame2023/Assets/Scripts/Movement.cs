@@ -13,6 +13,8 @@ public class Movement : MonoBehaviour,IRespawn
     private float stoppedThreshold = 0.01f;
     private float MouseSensitivity = 0.5f;
     private readonly float cameraDistance = 5f;
+    float forward, right;
+    Animator myAnimator;
 
     public void respawn()
     {
@@ -24,6 +26,8 @@ public class Movement : MonoBehaviour,IRespawn
     void Start()
 
     {
+        myAnimator = GetComponent<Animator>();
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
@@ -38,26 +42,32 @@ public class Movement : MonoBehaviour,IRespawn
     // Update is called once per frame
     void Update()
     {
-        
+        forward = 0;
+        right = 0;
 
 
         if (Input.GetKey(KeyCode.W))
         {
             transform.position += PlayerSpeed * transform.forward * Time.deltaTime;
+            forward = 1;
         }
         if (Input.GetKey(KeyCode.S))
         {
             transform.position -= PlayerSpeed * transform.forward * Time.deltaTime;
+            forward = -1;
         }
         if (Input.GetKey(KeyCode.D))
         {
             transform.position += PlayerSpeed * transform.right * Time.deltaTime;
+            right = 1;
         }
         if (Input.GetKey(KeyCode.A))
         {
             transform.position -= PlayerSpeed * transform.right * Time.deltaTime;
+            right = -1;
         }
         
+
         
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded())
         {
@@ -70,6 +80,12 @@ public class Movement : MonoBehaviour,IRespawn
         if (Vector3.Dot(Camera.main.transform.forward , transform.forward) < Mathf.Cos(30 * Mathf.Deg2Rad))
             Camera.main.transform.RotateAround(transform.position, transform.right, MouseSensitivity * Input.GetAxis("Vertical"));
         //  Camera.main.transform.LookAt(transform.position, Vector3.up);
+
+
+        myAnimator.SetFloat("forward", forward);
+
+        myAnimator.SetFloat("right", right);
+
     }
 
     private bool isGrounded()
