@@ -15,6 +15,7 @@ public class Movement : MonoBehaviour,IRespawn
     private readonly float cameraDistance = 5f;
     float forward, right;
     Animator myAnimator;
+    private float heightCam = 3;
 
     public void respawn()
     {
@@ -32,7 +33,7 @@ public class Movement : MonoBehaviour,IRespawn
         Cursor.visible = false;
 
         Camera.main.transform.rotation = transform.rotation;
-        Camera.main.transform.position = transform.position - cameraDistance * transform.forward + Vector3.up;
+        Camera.main.transform.position = transform.position - cameraDistance * transform.forward + heightCam *Vector3.up;
         CharacterSpawnPointScript character = FindObjectOfType<CharacterSpawnPointScript>();
         spawnPoint = character.transform;
 
