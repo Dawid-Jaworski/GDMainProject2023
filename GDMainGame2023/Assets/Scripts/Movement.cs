@@ -45,7 +45,7 @@ public class Movement : MonoBehaviour,IRespawn
     {
         forward = 0;
         right = 0;
-
+        Vector3 lastPosition = transform.position;
 
         if (Input.GetKey(KeyCode.W))
         {
@@ -83,8 +83,8 @@ public class Movement : MonoBehaviour,IRespawn
         //  Camera.main.transform.LookAt(transform.position, Vector3.up);
 
 
-        myAnimator.SetFloat("forward", forward);
-
+        myAnimator.SetFloat("forward",forward);
+        print(forward);
         myAnimator.SetFloat("right", right);
 
     }
