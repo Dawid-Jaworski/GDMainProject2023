@@ -12,10 +12,10 @@ public class Movement : MonoBehaviour,IRespawn
     Transform spawnPoint;
     private float stoppedThreshold = 0.01f;
     private float MouseSensitivity = 0.5f;
-    private readonly float cameraDistance = 5f;
+    private readonly float cameraDistance = 7f;
     float forward, right;
     Animator myAnimator;
-    private float heightCam = 3;
+    private float heightCam = 2;
 
     public void respawn()
     {
@@ -78,7 +78,7 @@ public class Movement : MonoBehaviour,IRespawn
 
         transform.Rotate(Vector3.up, MouseSensitivity*Input.GetAxis("Horizontal"));
      Camera.main.transform.RotateAround( transform.position, transform.right,- MouseSensitivity * Input.GetAxis("Vertical"));
-        if (Vector3.Dot(Camera.main.transform.forward , transform.forward) < Mathf.Cos(30 * Mathf.Deg2Rad))
+        if (Vector3.Dot(Camera.main.transform.forward , transform.forward) < Mathf.Cos(45 * Mathf.Deg2Rad))
             Camera.main.transform.RotateAround(transform.position, transform.right, MouseSensitivity * Input.GetAxis("Vertical"));
         //  Camera.main.transform.LookAt(transform.position, Vector3.up);
 

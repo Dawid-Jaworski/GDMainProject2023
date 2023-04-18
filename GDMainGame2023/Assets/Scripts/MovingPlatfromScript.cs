@@ -6,26 +6,35 @@ using UnityEngine;
 public class MovingPlatfromScript : MonoBehaviour
 {
     public bool staysExtended = false;
-    enum MovingPlatformState { InWall, Extended, GoingOut, ReturningToWall}
+    enum MovingPlatformState { InWall, Extended, GoingOut, ReturningToWall, GoingUp, GoingDown}
     MovingPlatformState currently = MovingPlatformState.InWall;
     public float goingOutSpeed = 2, returningSpeed = 1, extendtedTime = 4;
     Vector3 defaultPosition,extendedPosition;
 
-    public Transform extendedPositionTarget;
+    public Transform extendedPositionTarget0;
+    public Transform extendedPositionTarget1;
     private float timer;
 
     public Transform linkedPlatform;
     MovingPlatfromScript linkePlatformScript;
+    private Vector3 raisedElevatorPosition;
+    private bool isElevator;
 
 
     // Start is called before the first frame update
     void Start()
     {
         defaultPosition = transform.position;
-        if (extendedPositionTarget)
-            extendedPosition = extendedPositionTarget.position;
+        if (extendedPositionTarget0)
+            extendedPosition = extendedPositionTarget0.position;
         else
         extendedPosition = defaultPosition + transform.localScale.z * transform.forward;
+
+        if (extendedPositionTarget1)
+        {
+            raisedElevatorPosition = extendedPositionTarget1.position;
+            isElevator = true;
+        }
 
         if (linkedPlatform)
             linkePlatformScript = linkedPlatform.GetComponent<MovingPlatfromScript>();
