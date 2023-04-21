@@ -6,7 +6,7 @@ using UnityEngine;
 public class MovingPlatfromScript : MonoBehaviour
 {
     public bool staysExtended = false;
-    enum MovingPlatformState { InWall, Extended, GoingOut, ReturningToWall, GoingUp, GoingDown}
+    enum MovingPlatformState { InWall, Extended, GoingOut, ReturningToWall, GoingUp, GoingDown, isElevator}
     MovingPlatformState currently = MovingPlatformState.InWall;
     public float goingOutSpeed = 2, returningSpeed = 1, extendtedTime = 4;
     Vector3 defaultPosition,extendedPosition;
@@ -94,6 +94,13 @@ public class MovingPlatfromScript : MonoBehaviour
 
                 break;
 
+            case MovingPlatformState.isElevator:
+
+
+
+                break;
+
+                
         }
         
     }
